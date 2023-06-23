@@ -3,12 +3,13 @@ import React, { useState } from "react";
 import "./CSS/Add_Faculty.css";
 import doctor from "../../../../../img/doctoravatar.png";
 import { useDispatch, useSelector } from "react-redux";
-import { FacultyRegister, SendPassword } from "../../../../../Redux/auth/action";
 import Sidebar from "../../GlobalFiles/Sidebar";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Navigate } from "react-router-dom";
 import Image from "next/image";
+import { admin } from "../Faculty/Add_Course";
+import { University } from "../backend";
 const notify = (text) => toast(text);
 
 const Add_Faculty = () => {
@@ -20,19 +21,13 @@ const Add_Faculty = () => {
   const [loading, setLoading] = useState(false);
 
   const initData = {
-    facultyName: "",
-    facultyAge: "",
-    facultyMobile: "",
-    facultyEmail: "",
-    facultyBloodGroup: "",
-    facultyGender: "",
-    facultyAddress: "",
-    facultyEducation: "",
-    facultyDepartment: "",
-    facultyID: "",
-    facultyPassword: "",
-    facultyInitial :"",
-    details: "",
+    id: "",
+    name: "",
+    address: "",
+    gender: "",
+    email: "",
+    department: "",
+    password: "",
   };
   const [FacultyValue, setFacultyValue] = useState(initData);
 
@@ -43,8 +38,11 @@ const Add_Faculty = () => {
   const HandleFacultySubmit = (e) => {
     e.preventDefault();
     setLoading(true);
- 
-     
+    admin.addFaculty(FacultyValue); 
+    console.log(University.faculties);
+    setFacultyValue(initData);
+    notify("New faculty added")
+    setLoading(false);
   };
 
 
@@ -64,47 +62,23 @@ const Add_Faculty = () => {
                   <input
                     type="text"
                     placeholder="Full Name"
-                    name="facultyName"
-                    value={FacultyValue.facultyName}
+                    name="name"
+                    value={FacultyValue.name}
                     onChange={HandleFacultyChange}
                     required
                   />
                 </div>
               </div>
-              <div>
-                <label>Age</label>
-                <div className="inputdiv">
-                  <input
-                    type="number"
-                    placeholder="Age"
-                    name="facultyAge"
-                    value={FacultyValue.facultyAge}
-                    onChange={HandleFacultyChange}
-                    required
-                  />
-                </div>
-              </div>
-              <div>
-                <label> Number</label>
-                <div className="inputdiv">
-                  <input
-                    type="number"
-                    placeholder="Emergency Number"
-                    name="facultyMobile"
-                    value={FacultyValue.facultyMobile}
-                    onChange={HandleFacultyChange}
-                    required
-                  />
-                </div>
-              </div>
+            
+          
               <div>
                 <label>Email</label>
                 <div className="inputdiv">
                   <input
                     type="email"
                     placeholder="abc@abc.com"
-                    name="facultyEmail"
-                    value={FacultyValue.facultyEmail}
+                    name="email"
+                    value={FacultyValue.email}
                     onChange={HandleFacultyChange}
                     required
                   />
@@ -114,8 +88,8 @@ const Add_Faculty = () => {
                 <label>Gender</label>
                 <div className="inputdiv">
                   <select
-                    name="facultyGender"
-                    value={FacultyValue.facultyGender}
+                    name="gender"
+                    value={FacultyValue.gender}
                     onChange={HandleFacultyChange}
                     required
                   >
@@ -126,73 +100,28 @@ const Add_Faculty = () => {
                   </select>
                 </div>
               </div>
-              <div>
-                <label>Blood Group</label>
-                <div className="inputdiv">
-                  <select
-                    name="facyltyBloodGroup"
-                    value={FacultyValue.bloodGroup}
-                    onChange={HandleFacultyChange}
-                    required
-                  >
-                    <option value="Choose Blood Group">Select</option>
-                    <option value="A+">A+</option>
-                    <option value="A-">A-</option>
-                    <option value="B+">B+</option>
-                    <option value="B-">B-</option>
-                    <option value="AB+">AB+</option>
-                    <option value="AB-">AB-</option>
-                    <option value="O+">O+</option>
-                    <option value="O-">O-</option>
-                  </select>
-                </div>
-              </div>
-            
+             
               <div>
                 <label>Address</label>
                 <div className="inputdiv adressdiv">
                   <input
                     type="text"
                     placeholder="Address"
-                    name="facultyFddress"
-                    value={FacultyValue.facultyAddress}
+                    name="address"
+                    value={FacultyValue.address}
                     onChange={HandleFacultyChange}
                     required
                   />
                 </div>
               </div>
-              <div>
-                <label>Education</label>
-                <div className="inputdiv">
-                  <input
-                    type="text"
-                    placeholder="eg.PHD"
-                    name="facultyEducation"
-                    value={FacultyValue.facultyEducation}
-                    onChange={HandleFacultyChange}
-                    required
-                  />
-                </div>
-              </div>
-              <div>
-                <label>Initial</label>
-                <div className="inputdiv">
-                  <input
-                    type="text"
-                    placeholder="eg.ABO"
-                    name="facultyInitial"
-                    value={FacultyValue.facultyInitial}
-                    onChange={HandleFacultyChange}
-                    required
-                  />
-                </div>
-              </div>
+              
+              
               <div>
                 <label>Department</label>
                 <div className="inputdiv">
                   <select
-                    name="facultyDepartment"
-                    value={FacultyValue.facultyDepartment}
+                    name="department"
+                    value={FacultyValue.department}
                     onChange={HandleFacultyChange}
                     required
                   >
@@ -214,8 +143,8 @@ const Add_Faculty = () => {
                   <input
                     type="text"
                     placeholder="ID"
-                    name="facultyID"
-                    value={FacultyValue.facultyID}
+                    name="id"
+                    value={FacultyValue.id}
                     onChange={HandleFacultyChange}
                     required
                   />
@@ -227,28 +156,14 @@ const Add_Faculty = () => {
                   <input
                     type="text"
                     placeholder="Password"
-                    name="facultyPassword"
-                    value={FacultyValue.facultyPassword}
+                    name="password"
+                    value={FacultyValue.password}
                     onChange={HandleFacultyChange}
                     required
                   />
                 </div>
               </div>
-              <div>
-                <label>Other Details</label>
-                <div className="inputdiv">
-                  <textarea
-                    type="text"
-                    placeholder="Extra Info"
-                    rows="4"
-                    cols="50"
-                    name="details"
-                    value={FacultyValue.details}
-                    onChange={HandleFacultyChange}
-                    required
-                  />
-                </div>
-              </div>
+           
               <button type="submit" className="formsubmitbutton">
                 {loading ? "Loading..." : "Submit"}
               </button>

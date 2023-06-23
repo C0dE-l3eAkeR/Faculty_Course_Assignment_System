@@ -62,7 +62,7 @@ const Sidebar = ({userType}) => {
             </Link>) : null}
 
             {userType === "admin" ? (
-              <Link className="link" activeclassname="active" to={"/adddoctor"}>
+              <Link className="link" activeclassname="active" to={"/addfaculty"}>
                 <div className="icon">
                   <AiOutlineUserAdd className="mainIcon" />
                 </div>
@@ -76,7 +76,7 @@ const Sidebar = ({userType}) => {
             ) : null}
             
             {userType === "admin" ? (
-              <Link className="link" activeclassname="active" to={"/admin"}>
+              <Link className="link" activeclassname="active" to={"/addadmin"}>
                 <div className="icon">
                   <RiAdminLine
                     className="mainIcon"
@@ -95,7 +95,7 @@ const Sidebar = ({userType}) => {
         
 
             {userType === "admin" ? (
-              <Link className="link" activeclassname="active" to={"/rooms"}>
+              <Link className="link" activeclassname="active" to={"/assigncourse"}>
               <div className="icon">
                 <MdBedroomChild className="mainIcon" />
               </div>
@@ -112,7 +112,7 @@ const Sidebar = ({userType}) => {
               <Link
                 className="link"
                 activeclassname="active"
-                to={"/createslip"}
+                to={"/addcourse"}
               >
                 <div className="icon">
                   <BiDetail className="mainIcon" />
@@ -129,7 +129,7 @@ const Sidebar = ({userType}) => {
               <Link
                 className="link"
                 activeclassname="active"
-                to={"/doctorprofile"}
+                to={"/facultyprofile"}
               >
                 <div className="icon">
                   <SlUserFollow className="mainIcon" />
@@ -164,7 +164,7 @@ const Sidebar = ({userType}) => {
               <Link
                 className="link"
                 activeclassname="active"
-                to={"/checkappointment"}
+                to={"/offercourse"}
               >
                 <div className="icon">
                   <BsFillBookmarkCheckFill className="mainIcon" />

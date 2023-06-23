@@ -13,8 +13,7 @@ import { FaRegHospital, FaMapMarkedAlt, FaBirthdayCake } from "react-icons/fa";
 import Sidebar from "../../GlobalFiles/Sidebar";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, message, Modal } from "antd";
-import { UpdateFaculty } from "../../../../../Redux/auth/action";
-import { GetFacultyDetails } from "../../../../../Redux/Datas/action";
+
 import { Navigate } from "react-router-dom";
 import "./CSS/Faculty_Profile.css";
 import Docpic from "../../../../../img/doctoravatar.png";
@@ -33,9 +32,7 @@ function Faculty_Profile() {
 
   const disptach = useDispatch();
 
-  useEffect(() => {
-    disptach(GetFacultyDetails());
-  }, []);
+
 
   const [open, setOpen] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);

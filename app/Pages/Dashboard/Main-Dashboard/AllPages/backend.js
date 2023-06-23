@@ -1,5 +1,5 @@
 class User {
-    constructor(id, name, address, phoneNumber, email) {
+    constructor(id, name, address, gender, email) {
         if (this.constructor === User) {
             throw new TypeError('Abstract class "User" cannot be directly constructed.');
         }
@@ -7,7 +7,7 @@ class User {
         this.id = id;
         this.name = name;
         this.address = address;
-        this.phoneNumber = phoneNumber;
+        this.gender = gender;
         this.email = email;
     }
 
@@ -25,14 +25,14 @@ class Course {
 }
 
 class Admin extends User {
-    constructor(id, name, address, phoneNumber, email) {
-        super(id, name, address, phoneNumber, email);
+    constructor(id, name, address, gender, email) {
+        super(id, name, address, gender, email);
         
     }
 
     addFaculty(faculty) {
         University.addFac(faculty);
-        console.log(`Faculty ${faculty.name} has been added by ${this.name}`);
+        //console.log(`Faculty ${faculty.name} has been added by ${this.name}`);
     }
 
     deleteFaculty(faculty) {
@@ -44,9 +44,12 @@ class Admin extends User {
        University.offerCrs(faculty, course); 
     }
 
+  
     createCourse(courseName, courseCredit) {
-        const course = new Course(courseName, courseCredit);
-        University.createCrs(course);
+
+        University.crsIndx +=1;
+        const course = new Course(University.crsIndx, courseName, courseCredit);
+        University.courses.push(course);   
     }
 }
 
@@ -54,22 +57,15 @@ class Admin extends User {
 
 class Faculty extends User {
   
-    constructor(id, name, address, phoneNumber, email, department) {
-        super(id, name, address, phoneNumber, email);
+    constructor(id, name, address, gender, email, department, password) {
+        super(id, name, address, gender, email);
         this.department = department;
         this.assignedCourses = [];
         this.offerdCourses = [];
+        this.password = password;
         this.creditcount =0;
     }
   
-    createCourse(courseName, courseCredit) {
-        
-        const course = new Course(University.crsIndx,courseName, courseCredit);
-        University.crsIndx +=1;
-        this.assignedCourses.push(course);
-        console.log(`Course ${course.name} has been created by ${this.name}`);
-        return course;
-    }
 
     offerCourse(sec) {
         this.offerdCourses.push(sec);
@@ -127,18 +123,22 @@ class University {
         const sec1 = new Section(crs,this.secNo[crs.index], timing, this.allocateRoom()) 
         return sec1;
     }
+
     static addAll(){
-    this.faculties.push(new Faculty("001","abcshoaib","adsfd","234234","asdfdas","CSE"));
+    this.faculties.push(new Faculty("001","abcshoaib","adsfd","234234","asdfdas","CSE","masai"));
     this.courses.push(new Course(0,"CSE102","3"));
     this.secNo[0]=0;
     this.rooms.push(new Room(101,true))
     }
 
     static addFac(faculty){
-     this.faculties.push(faculty);
+    
+     this.faculties.push(new Faculty(faculty.id, faculty.name, faculty.address, faculty.gender,
+        faculty.email, faculty.department, faculty.password));
     }
 
     static createCrs(course){
+
         this.courses.unshift(course);
     }
     
@@ -147,8 +147,8 @@ class University {
     }
 
     static offerCrs(fac, crs, timing){
+
     if(fac.creditcount + crs.credit<11){
-    
     fac.offerCourse(this.addsec(crs, timing));
     fac.creditcount += crs.credit;
     }

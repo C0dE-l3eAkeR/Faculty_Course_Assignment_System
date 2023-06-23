@@ -8,11 +8,7 @@ import admin from "../../../img/admin.jpg";
 import "./DLogin.css";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import {
-  AdminLogin,
-  FacultyLogin,
-  forgetPassword,
-} from "../../../Redux/auth/action";
+
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Drawer } from "antd";
@@ -73,7 +69,7 @@ const DLogin = () => {
         });*/
         if(formvalue.ID=="100" && formvalue.password=="masai"){
         notify("Login Successful");
-        return navigate("/doctorprofile"); 
+        return navigate("/facultyprofile"); 
       } else  {
         setLoading(false);
 
@@ -135,19 +131,7 @@ const DLogin = () => {
       return notify("Please Fill all Details");
     }
     setforgetLoading(true);
-    dispatch(forgetPassword(ForgetPassword)).then((res) => {
-      if (res.message === "User not found") {
-        setforgetLoading(false);
-        return notify("User Not Found");
-      }
-      setForgetPassword({
-        type: "",
-        email: "",
-      });
-      onClose();
-      setforgetLoading(false);
-      return notify("Account Details Send");
-    });
+  
   };
 
   return (

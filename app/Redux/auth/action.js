@@ -1,19 +1,16 @@
 import * as types from "./types";
 import axios from "axios";
 
-
-
 //login user
-export const FacultyLogin = (data) => async (dispatch) => {
+export const NurseLogin = (data) => async (dispatch) => {
   try {
-    dispatch({ type: types.LOGIN_FACULTY_REQUEST });
+    dispatch({ type: types.LOGIN_NURSE_REQUEST });
     const res = await axios.post(
-      "http://localhost:4000/doctor_user",
+      "http://localhost:4000/patient_user",
       data
     );
-    console.log(res.data);
     dispatch({
-      type: types.LOGIN_FACULTY_SUCCESS,
+      type: types.LOGIN_NURSE_SUCCESS,
       payload: {
         message: res.data.message,
         user: res.data.user,
@@ -23,7 +20,35 @@ export const FacultyLogin = (data) => async (dispatch) => {
     return res.data;
   } catch (error) {
     dispatch({
-      type: types.LOGIN_FACULTY_ERROR,
+      type: types.LOGIN_NURSE_ERROR,
+      payload: {
+        message: error,
+      },
+    });
+  }
+};
+
+//login user
+export const DoctorLogin = (data) => async (dispatch) => {
+  try {
+    dispatch({ type: types.LOGIN_DOCTOR_REQUEST });
+    const res = await axios.post(
+      "http://localhost:4000/doctor_user",
+      data
+    );
+    console.log(res.data);
+    dispatch({
+      type: types.LOGIN_DOCTOR_SUCCESS,
+      payload: {
+        message: res.data.message,
+        user: res.data.user,
+        token: res.data.token,
+      },
+    });
+    return res.data;
+  } catch (error) {
+    dispatch({
+      type: types.LOGIN_DOCTOR_ERROR,
       payload: {
         message: error,
       },
@@ -60,9 +85,9 @@ export const AdminLogin = (data) => async (dispatch) => {
 };
 
 // REGISTER DOCTOR
-export const FacultyRegister = (data) => async (dispatch) => {
+export const DoctorRegister = (data) => async (dispatch) => {
   try {
-    dispatch({ type: types.REGISTER_FACULTY_REQUEST });
+    dispatch({ type: types.REGISTER_DOCTOR_REQUEST });
     const res = await axios.post(
       "https://zany-gray-clam-gear.cyclic.app/doctors/register",
       data
@@ -70,7 +95,7 @@ export const FacultyRegister = (data) => async (dispatch) => {
      console.log(res);
     return res.data;
     // dispatch({
-    //   type: types.REGISTER_FACULTY_SUCCESS,
+    //   type: types.REGISTER_DOCTOR_SUCCESS,
     //   payload: {
     //     message: res.data.message,
     //     user: res.data.user,
@@ -80,7 +105,7 @@ export const FacultyRegister = (data) => async (dispatch) => {
     // });
   } catch (error) {
     dispatch({
-      type: types.REGISTER_FACULTY_ERROR,
+      type: types.REGISTER_DOCTOR_ERROR,
       payload: {
         message: error,
       },
@@ -88,7 +113,34 @@ export const FacultyRegister = (data) => async (dispatch) => {
   }
 };
 
-
+// REGISTER NURSE
+export const NurseRegister = (data) => async (dispatch) => {
+  try {
+    dispatch({ type: types.REGISTER_NURSE_REQUEST });
+    const res = await axios.post(
+      "https://zany-gray-clam-gear.cyclic.app/nurses/register",
+      data
+    );
+    // console.log(res);
+    return res.data;
+    // dispatch({
+    //   type: types.REGISTER_NURSE_SUCCESS,
+    //   payload: {
+    //     message: res.data.message,
+    //     user: res.data.user,
+    //     // token: res.data.token,
+    //     report: res.data.report,
+    //   },
+    // });
+  } catch (error) {
+    dispatch({
+      type: types.REGISTER_NURSE_ERROR,
+      payload: {
+        message: error,
+      },
+    });
+  }
+};
 
 // REGISTER ADMIN
 export const AdminRegister = (data) => async (dispatch) => {
@@ -119,7 +171,33 @@ export const AdminRegister = (data) => async (dispatch) => {
   }
 };
 
-
+// REGISTER AMBULANCE
+export const AmbulanceRegister = (data) => async (dispatch) => {
+  try {
+    dispatch({ type: types.REGISTER_AMBULANCE_REQUEST });
+    const res = await axios.post(
+      "https://zany-gray-clam-gear.cyclic.app/ambulances/add",
+      data
+    );
+    console.log(res);
+    // dispatch({
+    //   type: types.REGISTER_AMBULANCE_SUCCESS,
+    //   payload: {
+    //     message: res.data.message,
+    //     user: res.data.user,
+    //     // token: res.data.token,
+    //     report: res.data.report,
+    //   },
+    // });
+  } catch (error) {
+    dispatch({
+      type: types.REGISTER_AMBULANCE_ERROR,
+      payload: {
+        message: error,
+      },
+    });
+  }
+};
 
 // logout user
 export const authLogout = () => async (dispatch) => {
@@ -132,18 +210,31 @@ export const authLogout = () => async (dispatch) => {
   }
 };
 
-
+//update nurse
+export const UpdateNurse = (data, id) => async (dispatch) => {
+  try {
+    dispatch({ type: types.EDIT_NURSE_REQUEST });
+    const res = await axios.patch(
+      `https://zany-gray-clam-gear.cyclic.app/nurses/${id}`,
+      data
+    );
+    console.log(res);
+    dispatch({ type: types.EDIT_NURSE_SUCCESS, payload: res.data.user });
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 //update doctor
-export const UpdateFaculty = (data, id) => async (dispatch) => {
+export const UpdateDoctor = (data, id) => async (dispatch) => {
   try {
-    dispatch({ type: types.EDIT_FACULTY_REQUEST });
+    dispatch({ type: types.EDIT_DOCTOR_REQUEST });
     const res = await axios.patch(
       `https://zany-gray-clam-gear.cyclic.app/doctors/${id}`,
       data
     );
     console.log(res);
-    dispatch({ type: types.EDIT_FACULTY_SUCCESS, payload: res.data.user });
+    dispatch({ type: types.EDIT_DOCTOR_SUCCESS, payload: res.data.user });
   } catch (error) {
     console.log(error);
   }
@@ -152,7 +243,7 @@ export const UpdateFaculty = (data, id) => async (dispatch) => {
 //update doctor
 export const SendPassword = (data) => async (dispatch) => {
   try {
-    dispatch({ type: types.EDIT_FACULTY_REQUEST });
+    dispatch({ type: types.EDIT_DOCTOR_REQUEST });
     const res = await axios.post(
       `https://zany-gray-clam-gear.cyclic.app/admin/password`,
       data

@@ -9,10 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { AiFillCalendar, AiFillEdit } from "react-icons/ai";
 import axios from "axios";
 import './CSS/Faculty_Profile.css'
-import {
-  DeleteCourse,
-  GetAllCourse,
-} from "../../../../../Redux/Datas/action";
+
 import Sidebar from "../../GlobalFiles/Sidebar";
 
 import { fac1 } from "./Faculty_Profile";
@@ -92,12 +89,15 @@ const startTime = ["08.00am","09.10am"];
 const endTime = ["09.00am","10.10am"];
 const days = ["Sat", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri"];
 
-  const DeleteCrs = (id) => {
-    disptach(DeleteCourse(id));
+  const DeleteCrs = (crs) => {
+  
+    const index = University.courses.indexOf(crs);
+    if (index > -1) { // only splice array when item is found
+      University.courses.splice(index, 1); // 2nd parameter means remove one item only
+    }
+  
   };
-  useEffect(() => {
-    disptach(GetAllCourse());
-  }, []);
+ 
 /*
   if (data?.isAuthticated === false) {
     return <Navigate to={"/"} />;
@@ -180,6 +180,8 @@ const days = ["Sat", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri"];
                 <thead>
                   <tr>
                     <th>Course</th>
+                    <th>Credit</th>
+                    <th>Resolve</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -192,7 +194,7 @@ const days = ["Sat", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri"];
                 <button  onClick={showModal}>
                   {" "}
                   <AiFillEdit />
-                 <div style={{ paddingLeft: "225px" }}> Offerr Course</div>
+                 <div style={{ paddingLeft: "225px" }}> Offer Course</div>
                 </button>
               </div></td>
                         <td><h1>{ele.credit}</h1></td>
@@ -204,7 +206,7 @@ const days = ["Sat", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri"];
                               background: "transparent",
                               cursor: "pointer",
                             }}
-                            onClick={() => DeleteCrs(ele.ID)}
+                            onClick={() => DeleteCrs(ele)}
                           >
                            Delete
                           </button></td>

@@ -1,9 +1,5 @@
 import * as types from "./types";
-let TOKEN ="";
-if (typeof window !== 'undefined') {
-  // Perform localStorage action
- TOKEN = localStorage.getItem("token");
-}
+const TOKEN = localStorage.getItem("token");
 const initialState = {
   userLogin: { loading: false, error: false, message: "" },
   userLogout: { message: "" },
@@ -15,16 +11,16 @@ const initialState = {
 };
 export default function authReducer(state = initialState, { type, payload }) {
   switch (type) {
-    case 
+    case types.LOGIN_NURSE_REQUEST ||
       types.LOGIN_ADMIN_REQUEST ||
-      types.LOGIN_FACULTY_REQUEST:
+      types.LOGIN_DOCTOR_REQUEST:
       return {
         ...state,
         userLogin: { loading: true, error: false },
       };
-    case 
+    case types.LOGIN_NURSE_SUCCESS ||
       types.LOGIN_ADMIN_SUCCESS ||
-      types.LOGIN_FACULTY_SUCCESS:
+      types.LOGIN_DOCTOR_SUCCESS:
       localStorage.setItem("token", payload.token);
       return {
         ...state,
@@ -35,19 +31,19 @@ export default function authReducer(state = initialState, { type, payload }) {
           user: payload.user,
         },
       };
-    case 
+    case types.LOGIN_NURSE_ERROR ||
       types.LOGIN_ADMIN_ERROR ||
-      types.LOGIN_FACULTY_ERROR:
+      types.LOGIN_DOCTOR_ERROR:
       return {
         ...state,
         userLogin: { loading: false, error: true, message: payload.message },
       };
-    case types.LOGIN_FACULTY_REQUEST:
+    case types.LOGIN_DOCTOR_REQUEST:
       return {
         ...state,
         userLogin: { loading: true, error: false },
       };
-    case types.LOGIN_FACULTY_SUCCESS:
+    case types.LOGIN_DOCTOR_SUCCESS:
       localStorage.setItem("token", payload.token);
       return {
         ...state,
@@ -58,7 +54,7 @@ export default function authReducer(state = initialState, { type, payload }) {
           user: payload.user,
         },
       };
-    case types.LOGIN_FACULTY_ERROR:
+    case types.LOGIN_DOCTOR_ERROR:
       return {
         ...state,
         userLogin: { loading: false, error: true, message: payload.message },
@@ -79,8 +75,14 @@ export default function authReducer(state = initialState, { type, payload }) {
           user: payload.user,
         },
       };
-   
-    case types.EDIT_FACULTY_SUCCESS:
+    case types.EDIT_NURSE_SUCCESS:
+      return {
+        ...state,
+        data: {
+          user: payload,
+        },
+      };
+    case types.EDIT_DOCTOR_SUCCESS:
       return {
         ...state,
         data: {

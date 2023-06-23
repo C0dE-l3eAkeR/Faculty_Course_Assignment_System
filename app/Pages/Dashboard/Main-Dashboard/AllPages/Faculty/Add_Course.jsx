@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
-import { CreatePayment, CreateReport } from "../../../../../Redux/Datas/action";
+
 import Sidebar from "../../GlobalFiles/Sidebar";
 import "react-toastify/dist/ReactToastify.css";
 import { toast, ToastContainer } from "react-toastify";
@@ -14,9 +14,9 @@ import { University, Admin } from "../backend";
 
 const notify = (text) => toast(text);
 
-const admn = new Admin("101","Asif","dsf","sdf","sdfsdf");
+export const admin = new Admin("101","Asif","dsf","sdf","sdfsdf");
 
-const Add_Course = ({admin}) => {
+const Add_Course = () => {
 
 
   const [loading, setLoading] = useState(false);
@@ -49,9 +49,9 @@ const Add_Course = ({admin}) => {
     try {
       setLoading(true);
   
-     admn.createCourse(data.courseName, data.courseCredit);
+     admin.createCourse(data.courseName, data.courseCredit);
      setAddedC(University.courses);
-     notify("Report Created Sucessfully");
+     notify("Course Created Sucessfully");
           setLoading(false);
           setReportValue(InitData);
     } catch (error) {
@@ -59,7 +59,7 @@ const Add_Course = ({admin}) => {
     }
   };
 
-  
+  console.log(AddedCourses);
   return (
     <>
       <ToastContainer />
@@ -150,7 +150,7 @@ const Add_Course = ({admin}) => {
                 <thead>
                   <tr>
                     <th>Course Name</th>
-                    <th>Course Initial</th>
+                    <th>Course Credit</th>
                     <th>Resolve</th>
                   </tr>
                 </thead>

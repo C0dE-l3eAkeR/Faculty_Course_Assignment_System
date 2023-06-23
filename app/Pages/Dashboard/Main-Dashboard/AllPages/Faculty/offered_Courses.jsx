@@ -7,10 +7,7 @@ import { Navigate } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import './CSS/Faculty_Profile.css'
-import {
-  DeleteCourse,
-  GetAllCourse,
-} from "../../../../../Redux/Datas/action";
+
 import Sidebar from "../../GlobalFiles/Sidebar";
 import { University } from "../backend";
 import { fac1 } from "./Faculty_Profile";
@@ -39,20 +36,10 @@ function toggle() {
 
 
   const DeleteCrs = (id) => {
-    disptach(DeleteCourse(id));
+ 
   };
-  useEffect(() => {
-    disptach(GetAllCourse());
-  }, []);
-/*
-  if (data?.isAuthticated === false) {
-    return <Navigate to={"/"} />;
-  }
 
-  if (data?.user.userType !== "doctor") {
-    return <Navigate to={"/dashboard"} />;
-  }
- */
+
   return (
     <>
       <div className="container">

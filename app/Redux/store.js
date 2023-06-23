@@ -5,7 +5,6 @@ import {
 } from "redux";
 import thunk from "redux-thunk";
 import { rootReducer } from "./index.js";
-import { type } from "@testing-library/user-event/dist/type/index.js";
 
 function saveToLocalStorage(store) {
   try {
@@ -26,10 +25,7 @@ function loadFromLocalStorage() {
     return undefined;
   }
 }
-function composeEnhancers(){};
-if(typeof window !== 'undefined'){
-  composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-}
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const persistedState = loadFromLocalStorage();
 
 export const store = createStore(
