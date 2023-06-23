@@ -27,9 +27,6 @@ import { faculty } from "../../../Dashboard-Login/DLogin";
 function Faculty_Profile() {
   const userType = "faculty";
 
-  const { data } = useSelector((store) => store.auth);
-
-  const disptach = useDispatch();
 
 
 

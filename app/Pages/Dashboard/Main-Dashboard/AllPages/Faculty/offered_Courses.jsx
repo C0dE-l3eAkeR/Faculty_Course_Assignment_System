@@ -13,9 +13,9 @@ import { University } from "../backend";
 import { faculty } from "../../../Dashboard-Login/DLogin";
 
 const Offered_Courses = () => {
-  const { data } = useSelector((store) => store.auth);
+  
   //const id = data.user.ID;
-  const disptach = useDispatch();
+ 
   const navigate = useNavigate();
   const columns = [
     { title: "Course Name", dataIndex: "courseName", key: "courseName" },

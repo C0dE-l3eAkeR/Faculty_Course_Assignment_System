@@ -16,7 +16,7 @@ const Add_Faculty = () => {
  
   console.log(1);
 
-  const dispatch = useDispatch();
+
 
   const [loading, setLoading] = useState(false);
 

@@ -22,7 +22,7 @@ const Add_Course = () => {
   const [loading, setLoading] = useState(false);
   const [AddedCourses, setAddedC] =useState(University.courses);
 
-  const dispatch = useDispatch();
+
 
 
   const InitData = {

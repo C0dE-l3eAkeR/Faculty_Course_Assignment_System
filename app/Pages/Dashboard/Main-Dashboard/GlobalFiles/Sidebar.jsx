@@ -22,11 +22,8 @@ import "./CommonCSS.css";
 
 const Sidebar = ({userType}) => {
   const [isOpen, setIsOpen] = useState(true);
-  const dispatch = useDispatch();
 
-  const {
-    data: { user },
-  } = useSelector((state) => state.auth);
+
 
   function toggle() {
     setIsOpen(!isOpen);

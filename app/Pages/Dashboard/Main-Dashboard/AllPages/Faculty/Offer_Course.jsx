@@ -19,9 +19,9 @@ import { University,Timing } from "../backend";
 
 const Offer_Course = () => {
   console.log(faculty.creditcount);
-  const { data } = useSelector((store) => store.auth);
+
   const [selected, setselected] =useState("");
-  const disptach = useDispatch();
+ 
   const navigate = useNavigate();
   const columns = [
     { title: "Course Name", dataIndex: "courseName", key: "courseName" },

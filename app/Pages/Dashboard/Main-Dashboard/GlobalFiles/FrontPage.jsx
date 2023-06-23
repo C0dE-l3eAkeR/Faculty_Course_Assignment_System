@@ -13,23 +13,17 @@ import { RiAdminLine } from "react-icons/ri";
 import Sidebar from "./Sidebar";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { GetAllData } from "../../../../Redux/Datas/action";
 import TextArea from "antd/es/input/TextArea";
 
 const FrontPage = () => {
  
+const data = {
+ faculty :"2",
+ admin:"2",
+ Offered_Course:"4",
+ Course_Count:"5"
+}
 
-  const {
-    dashboard: { data },
-  } = useSelector((store) => store.data);
-
-  console.log(data);
-
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(GetAllData());
-  }, []);
 
   return (
     <div className="container">
@@ -39,7 +33,7 @@ const FrontPage = () => {
         <div className="maindiv">
           <div className="one commondiv">
             <div>
-              <h1>{data?.doctor}</h1>
+              <h1>{data?.faculty}</h1>
               <p>Faculty</p>
             </div>
             <MdPersonAdd className="overviewIcon" />
@@ -59,7 +53,7 @@ const FrontPage = () => {
           <div className="six commondiv">
             {" "}
             <div>
-              <h1>{data?.report}</h1>
+              <h1>{data?.Course_Count}</h1>
               <p>Course Count</p>
             </div>
             <MdPayment className="overviewIcon" />
@@ -67,7 +61,7 @@ const FrontPage = () => {
           <div className="six commondiv">
             {" "}
             <div>
-              <h1>{data?.appointment}</h1>
+              <h1>{data?.Offered_Course}</h1>
               <p>Offered Course</p>
             </div>
             < BsFillBookmarkCheckFill className="overviewIcon" />
