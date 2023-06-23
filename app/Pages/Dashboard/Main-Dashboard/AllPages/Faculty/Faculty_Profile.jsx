@@ -18,12 +18,11 @@ import { Navigate } from "react-router-dom";
 import "./CSS/Faculty_Profile.css";
 import Docpic from "../../../../../img/doctoravatar.png";
 import { University } from "../backend";
+import { faculty } from "../../../Dashboard-Login/DLogin";
 
 
 
 
-export const fac1 = University.faculties[0];
-console.log(fac1.name);
 // *********************************************************
 function Faculty_Profile() {
   const userType = "faculty";
@@ -101,20 +100,10 @@ function Faculty_Profile() {
               <hr />
               <div className="singleitemdiv">
                 <GiMeditation className="singledivicons" />
-                <p>{University.faculties[0].name}</p>
+                <p>{faculty.name}</p>
               </div>
-              <div className="singleitemdiv">
-                <MdBloodtype className="singledivicons" />
-                <p>{data?.user?.bloodGroup}</p>
-              </div>
-              <div className="singleitemdiv">
-                <FaBirthdayCake className="singledivicons" />
-                <p>{data?.user?.DOB}</p>
-              </div>
-              <div className="singleitemdiv">
-                <BsFillTelephoneFill className="singledivicons" />
-                <p>{data?.user?.mobile}</p>
-              </div>
+             
+            
               <div className="singleitemdiv">
                 <button onClick={showModal}>
                   {" "}
@@ -192,20 +181,13 @@ function Faculty_Profile() {
                 </h2>
                 <div className="singleitemdiv">
                   <BsGenderAmbiguous className="singledivicons" />
-                  <p>{data?.user?.gender}</p>
+                  <p>{faculty.gender}</p>
                 </div>
-                <div className="singleitemdiv">
-                  <AiFillCalendar className="singledivicons" />
-                  <p>{data?.user?.age}</p>
-                </div>
+              
 
                 <div className="singleitemdiv">
-                  <MdOutlineCastForEducation className="singledivicons" />
-                  <p>{data?.user?.education}</p>
-                </div>
-                <div className="singleitemdiv">
                   <BsHouseFill className="singledivicons" />
-                  <p>{data?.user?.address}</p>
+                  <p>{faculty.address}</p>
                 </div>
               </div>
               {/* ***********  Third Div ******************** */}

@@ -9,10 +9,8 @@ import { useNavigate } from "react-router-dom";
 import { AiFillCalendar, AiFillEdit } from "react-icons/ai";
 import axios from "axios";
 import './CSS/Faculty_Profile.css'
-
 import Sidebar from "../../GlobalFiles/Sidebar";
-
-import { fac1 } from "./Faculty_Profile";
+import { faculty } from "../../../Dashboard-Login/DLogin";
 import { University,Timing } from "../backend";
 
 
@@ -20,9 +18,9 @@ import { University,Timing } from "../backend";
 
 
 const Offer_Course = () => {
-  console.log(fac1.creditcount);
+  console.log(faculty.creditcount);
   const { data } = useSelector((store) => store.auth);
- 
+  const [selected, setselected] =useState("");
   const disptach = useDispatch();
   const navigate = useNavigate();
   const columns = [
@@ -57,11 +55,12 @@ const [formData, setFormData] = useState({
 const handleFormChange = (e) => {
   setFormData({ ...formData, [e.target.name]: e.target.value });
 };
+const [selectedRow, setSelectedRow] = useState(null);
 const [confirmLoading, setConfirmLoading] = useState(false);
 const handleFormSubmit = () => {
   const time = new Timing(formData.startTime, formData.endTime, formData.day1, formData.day2);
-  University.offerCrs(fac1,University.courses[0],time);
-  console.log(fac1.offerdCourses);
+  University.offerCrs(faculty,selectedRow,time);
+  console.log(faculty.offerdCourses);
   handleOk();
 };
 const handleOk = () => {
@@ -69,7 +68,7 @@ const handleOk = () => {
   setTimeout(() => {
     setOpen(false);
     setConfirmLoading(false);
-  }, 2000);
+  }, 1000);
 };
 
 
@@ -77,11 +76,12 @@ function toggle() {
   setop(!opened);
 }
 
- const [selectedRow, setSelectedRow] = useState(null);
- const handleRowClick = (rowId) => {
+
+
+ const handleRowClick = (row) => {
   toggle();
   if(opened)
-  setSelectedRow(rowId);
+  setSelectedRow(row);
   else
   setSelectedRow(null);
 };
@@ -189,7 +189,7 @@ const days = ["Sat", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri"];
                     return (
                       <tr key={ele.name}
                  
-                      onClick={() => handleRowClick(ele.name)}>
+                      onClick={() => handleRowClick(ele)}>
                         <td><h1>{ele.name}</h1><br /><div className="singleitemdiv">
                 <button  onClick={showModal}>
                   {" "}

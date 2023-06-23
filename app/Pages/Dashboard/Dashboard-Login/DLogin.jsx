@@ -3,7 +3,7 @@ import React from "react";
 import { useState } from "react";
 import Image from 'next/image'
 import { Radio } from "antd";
-import banner from "./banner.png";
+import banner2 from "./banner.png";
 import admin2 from "../../../img/admin.jpg";
 import "./DLogin.css";
 import { useDispatch } from "react-redux";
@@ -148,7 +148,7 @@ const DLogin = () => {
 
       <div className="mainLoginPage">
         <div className="leftside">
-          <Image src={banner} alt="banner" />
+        {/*<Image src={banner} alt="banner" />*/}
         </div>
         <div className="rightside">
           <h1>Login</h1>

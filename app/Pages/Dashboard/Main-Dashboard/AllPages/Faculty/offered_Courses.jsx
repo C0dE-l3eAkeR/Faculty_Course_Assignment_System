@@ -10,7 +10,7 @@ import './CSS/Faculty_Profile.css'
 
 import Sidebar from "../../GlobalFiles/Sidebar";
 import { University } from "../backend";
-import { fac1 } from "./Faculty_Profile";
+import { faculty } from "../../../Dashboard-Login/DLogin";
 
 const Offered_Courses = () => {
   const { data } = useSelector((store) => store.auth);
@@ -26,7 +26,7 @@ const Offered_Courses = () => {
 
  const [AllCourses, setApp] = useState([]); 
  const [opened, setop] = useState(true);
- const course = fac1.offerdCourses;
+ const course = faculty.offerdCourses;
  const courseI = "CSE101";
  const courseN ="Intro to pc";
 

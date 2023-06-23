@@ -49,6 +49,7 @@ class Admin extends User {
 
         University.crsIndx +=1;
         const course = new Course(University.crsIndx, courseName, courseCredit);
+        University.secNo[University.crsIndx]=0;
         University.courses.push(course);   
     }
 }
@@ -125,9 +126,9 @@ class University {
     }
 
     static addAll(){
-    this.faculties.push(new Faculty("001","abcshoaib","adsfd","234234","asdfdas","CSE","masai"));
-    this.admins.push(new Admin("101","shoaib","adsfd","asdfdas","gmail","masai"));
-    this.courses.push(new Course(0,"CSE102","3"));
+    this.faculties.push(new Faculty("100","abcshoaib","adsfd","234234","asdfdas","CSE","masai"));
+    this.admins.push(new Admin("100","shoaib","adsfd","asdfdas","gmail","masai"));
+    this.courses.push(new Course(0,"CSE102",'3'));
     this.secNo[0]=0;
     this.rooms.push(new Room(101,true))
     }
@@ -148,14 +149,14 @@ class University {
     }
 
     static offerCrs(fac, crs, timing){
-
-    if(fac.creditcount + crs.credit<11){
+    console.log(parseInt(fac.creditcount) + parseInt(crs.credit));
+   // if(fac.creditcount + parseInt(crs.credit) <=11){
     fac.offerCourse(this.addsec(crs, timing));
     fac.creditcount += crs.credit;
-    }
-    else {
+   // }
+  //  else {
         console.log("Error");
-    }
+   // }
   }
 }
 
