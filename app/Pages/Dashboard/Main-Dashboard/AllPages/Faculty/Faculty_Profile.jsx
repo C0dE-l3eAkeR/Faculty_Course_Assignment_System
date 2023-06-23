@@ -18,10 +18,17 @@ import { GetFacultyDetails } from "../../../../../Redux/Datas/action";
 import { Navigate } from "react-router-dom";
 import "./CSS/Faculty_Profile.css";
 import Docpic from "../../../../../img/doctoravatar.png";
+import { University } from "../backend";
 
 
+University.addAll();
+
+export const fac1 = University.faculties[0];
+console.log(fac1.name);
 // *********************************************************
-const Faculty_Profile = () => {
+function Faculty_Profile() {
+  const userType = "faculty";
+
   const { data } = useSelector((store) => store.auth);
 
   const disptach = useDispatch();
@@ -56,13 +63,13 @@ const Faculty_Profile = () => {
   };
 
   const [formData, setFormData] = useState({
-    facultyName: data.user.facultyName,
-    facultyAge: data.user.facultyAge,
-    facultyGender: data.user.facultyGender,
-    facultyBloodGroup: data.user.facultyBloodGroup,
-    facultyEducation: data.user.facultyeEducation,
-    facultyMobile: data.user.facultyMobile,
-  });
+    facultyName: "",
+    facultyAge: "",
+    facultyGender: "",
+    facultyBloodGroup: "",
+    facultyEducation: "",
+    facultyMobile: ""
+  })
 
   const handleFormChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -74,20 +81,20 @@ const Faculty_Profile = () => {
     handleOk();
   };
 
-  if (data?.isAuthticated === false) {
+  /*if (data?.isAuthticated === false) {
     return <Navigate to={"/"} />;
   }
 
   if (data?.user.userType !== "doctor") {
     return <Navigate to={"/dashboard"} />;
-  }
+  }*/
 
   return (
     <>
       {contextHolder}
       <div className="container">
-        <Sidebar />
-        
+        <Sidebar userType={userType} />
+
         <div className="AfterSideBar">
           <div className="maindoctorProfile">
             <div className="firstBox">
@@ -97,7 +104,7 @@ const Faculty_Profile = () => {
               <hr />
               <div className="singleitemdiv">
                 <GiMeditation className="singledivicons" />
-                <p>{data?.user?.facultyName}</p>
+                <p>{University.faculties[0].name}</p>
               </div>
               <div className="singleitemdiv">
                 <MdBloodtype className="singledivicons" />
@@ -140,15 +147,13 @@ const Faculty_Profile = () => {
                     value={formData.facultyName}
                     onChange={handleFormChange}
                     type="text"
-                    placeholder="Full name"
-                  />
+                    placeholder="Full name" />
                   <input
                     name="age"
                     value={formData.age}
                     onChange={handleFormChange}
                     type="number"
-                    placeholder="Age"
-                  />
+                    placeholder="Age" />
                   <select name="gender" onChange={handleFormChange}>
                     <option value="">Select gender</option>
                     <option value="male">Male</option>
@@ -160,29 +165,25 @@ const Faculty_Profile = () => {
                     value={formData.bloodGroup}
                     onChange={handleFormChange}
                     type="text"
-                    placeholder="Blood Group"
-                  />
+                    placeholder="Blood Group" />
                   <input
                     name="education"
                     value={formData.education}
                     onChange={handleFormChange}
                     type="text"
-                    placeholder="education"
-                  />
+                    placeholder="education" />
                   <input
                     name="mobile"
                     value={formData.mobile}
                     onChange={handleFormChange}
                     type="number"
-                    placeholder="mobile"
-                  />
+                    placeholder="mobile" />
                   <input
                     name="DOB"
                     value={formData.DOB}
                     onChange={handleFormChange}
                     type="date"
-                    placeholder="Date of birth"
-                  />
+                    placeholder="Date of birth" />
                 </form>
               </Modal>
             </div>
@@ -215,7 +216,7 @@ const Faculty_Profile = () => {
                 <h2 style={{ textAlign: "center", marginTop: "10px" }}>
                   Institution Details
                 </h2>
-                
+
                 <div className="singleitemdiv">
                   <FaRegHospital className="singledivicons" />
                   <p>South North University</p>
@@ -233,6 +234,6 @@ const Faculty_Profile = () => {
       </div>
     </>
   );
-};
+}
 
 export default Faculty_Profile;

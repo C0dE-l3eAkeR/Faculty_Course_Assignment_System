@@ -5,38 +5,29 @@ import { useDispatch, useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 import { assignFaculty, GetFaculty } from "../../../../../Redux/Datas/action";
 import Sidebar from "../../GlobalFiles/Sidebar";
+import { University } from "../backend";
+
 
 const Assign_Course = () => {
-  const { data } = useSelector((store) => store.auth);
-  let act ="";
-  if(data?.user.userType === "admin") act = "Assign";
-  
-  console.log(data?.user.userType );
 
+  const faculties = University.faculties;
+
+  const userType = "admin";
   const dispatch = useDispatch();
 
-  const { faculty } = useSelector((state) => state.data);
+
 
   const AssignFaculty = (ID) => {
-    let data = {
-      Assigned: "Assign",
-      ID,
-    };
-    dispatch(assignFaculty(data));
+   
   };
 
-  useEffect(() => {
-    dispatch(GetFaculty());
-  }, [dispatch]);
 
-  if (data?.isAuthticated === false) {
-    return <Navigate to={"/"} />;
-  }
+
 
   return (
     <>
       <div className="container">
-        <Sidebar />
+      <Sidebar userType="admin"/>
         <div className="AfterSideBar">
           <div className="Payment_Page">
             <h1 style={{ marginBottom: "2rem" }}>Faculty List</h1>
@@ -50,41 +41,26 @@ const Assign_Course = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {faculty?.map((ele) => {
+                  {faculties.map((ele) => {
                     return (
                       <tr>
-                        <td>{ele.facultyInitial}</td>
+                        <td>{ele.name}</td>
                         <td style={{ marginLeft: "1rem" }}>{ele.facultyName}</td>
                        <td>
-                        {data?.user.userType === "admin" ?(
                           <button 
                             style={{
                               border: "none",
                               outline: "none",
                               background: "transparent",
                               color:
-                                ele.Assigned === "Assign" ? "gray" : "red",
+                             "red",
                               cursor:
-                                ele.Assigned === "Assign" ? "" : "pointer",
+                               "pointer",
                             }}
                             onClick={() => AssignFaculty(ele.ID)}
                           >
-                            {act}
-                          </button>):(<button 
-                          
-                            style={{
-                              border: "none",
-                              outline: "none",
-                              background: "transparent",
-                              color:
-                                ele.Assigned === "Assigned" ? "gray" : "red",
-                              cursor:
-                                ele.Assigned === "Assigned" ? "" : "pointer",
-                            }}
-                            onClick={() => AssignFaculty(ele.ID)}
-                          >
-                            {act}
-                          </button>)}
+                            assign
+                          </button>
                         </td>
                       </tr>
                     );

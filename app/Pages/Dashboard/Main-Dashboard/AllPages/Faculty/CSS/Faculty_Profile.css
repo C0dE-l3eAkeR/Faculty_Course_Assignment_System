@@ -10,6 +10,7 @@
   gap: 1rem;
 }
 
+
 .singleitemdiv {
   display: flex;
   justify-content: left;
@@ -176,9 +177,10 @@ table {
 td,
 th {
   border: 1px solid #dddddd;
-  text-align: left;
+  text-align: center;
   padding: 8px;
   width: 100%;
+
 
 }
 .closed {
@@ -187,9 +189,7 @@ th {
 .opend {
   height: 60px;
  }
-tr :hover{
-  background-color: #c3c7ff75;
-}
+
 
 tr:nth-child(even) {
   background-color: #dddddd92;

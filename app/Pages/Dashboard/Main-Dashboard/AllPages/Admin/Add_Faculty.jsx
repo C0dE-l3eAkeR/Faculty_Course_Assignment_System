@@ -12,9 +12,8 @@ import Image from "next/image";
 const notify = (text) => toast(text);
 
 const Add_Faculty = () => {
-
+ 
   console.log(1);
-  const { data } = useSelector((store) => store.auth);
 
   const dispatch = useDispatch();
 
@@ -37,53 +36,28 @@ const Add_Faculty = () => {
   };
   const [FacultyValue, setFacultyValue] = useState(initData);
 
-  const HandleDoctorChange = (e) => {
+  const HandleFacultyChange = (e) => {
     setFacultyValue({ ...FacultyValue, [e.target.name]: e.target.value });
   };
 
-  const HandleDoctorSubmit = (e) => {
+  const HandleFacultySubmit = (e) => {
     e.preventDefault();
     setLoading(true);
-    dispatch(FacultyRegister(FacultyValue)).then((res) => {
-      if (res.message === "Doctor already exists") {
-        setLoading(false);
-        return notify("Doctor Already Exist");
-      }
-      if (res.message === "error") {
-        setLoading(false);
-        return notify("Something went wrong, Please try Again");
-      }
-
-      let data = {
-        email: res.data.email,
-        password: res.data.password,
-        userId: res.data.docID,
-      };
-      console.log(data, "DOCTOR REGISTER SUCCESSFULLY");
-      dispatch(SendPassword(data)).then((res) => notify("Account Detais Sent"));
-      setLoading(false);
-      setFacultyValue(initData);
-    });
+ 
+     
   };
 
-  if (data?.isAuthticated === false) {
-    return <Navigate to={"/"} />;
-  }
-
-  if (data?.user.userType !== "admin") {
-    return <Navigate to={"/dashboard"} />;
-  }
 
   return (
     <>
       <ToastContainer />
       <div className="container">
-        <Sidebar />
+      <Sidebar userType="admin"/>
         <div className="AfterSideBar">
-          <div className="Main_Add_Doctor_div">
+          <div className="Main_Add_Faculty_div">
             <h1>Add Faculty</h1>
             <Image src={doctor} alt="doctor" className="avatarimg" />
-            <form onSubmit={HandleDoctorSubmit}>
+            <form onSubmit={HandleFacultySubmit}>
               <div>
                 <label>Faculty Name</label>
                 <div className="inputdiv">
@@ -92,7 +66,7 @@ const Add_Faculty = () => {
                     placeholder="Full Name"
                     name="facultyName"
                     value={FacultyValue.facultyName}
-                    onChange={HandleDoctorChange}
+                    onChange={HandleFacultyChange}
                     required
                   />
                 </div>
@@ -105,7 +79,7 @@ const Add_Faculty = () => {
                     placeholder="Age"
                     name="facultyAge"
                     value={FacultyValue.facultyAge}
-                    onChange={HandleDoctorChange}
+                    onChange={HandleFacultyChange}
                     required
                   />
                 </div>
@@ -118,7 +92,7 @@ const Add_Faculty = () => {
                     placeholder="Emergency Number"
                     name="facultyMobile"
                     value={FacultyValue.facultyMobile}
-                    onChange={HandleDoctorChange}
+                    onChange={HandleFacultyChange}
                     required
                   />
                 </div>
@@ -131,7 +105,7 @@ const Add_Faculty = () => {
                     placeholder="abc@abc.com"
                     name="facultyEmail"
                     value={FacultyValue.facultyEmail}
-                    onChange={HandleDoctorChange}
+                    onChange={HandleFacultyChange}
                     required
                   />
                 </div>
@@ -142,7 +116,7 @@ const Add_Faculty = () => {
                   <select
                     name="facultyGender"
                     value={FacultyValue.facultyGender}
-                    onChange={HandleDoctorChange}
+                    onChange={HandleFacultyChange}
                     required
                   >
                     <option value="Choose Gender">Choose Gender</option>
@@ -158,7 +132,7 @@ const Add_Faculty = () => {
                   <select
                     name="facyltyBloodGroup"
                     value={FacultyValue.bloodGroup}
-                    onChange={HandleDoctorChange}
+                    onChange={HandleFacultyChange}
                     required
                   >
                     <option value="Choose Blood Group">Select</option>
@@ -182,7 +156,7 @@ const Add_Faculty = () => {
                     placeholder="Address"
                     name="facultyFddress"
                     value={FacultyValue.facultyAddress}
-                    onChange={HandleDoctorChange}
+                    onChange={HandleFacultyChange}
                     required
                   />
                 </div>
@@ -195,7 +169,7 @@ const Add_Faculty = () => {
                     placeholder="eg.PHD"
                     name="facultyEducation"
                     value={FacultyValue.facultyEducation}
-                    onChange={HandleDoctorChange}
+                    onChange={HandleFacultyChange}
                     required
                   />
                 </div>
@@ -208,7 +182,7 @@ const Add_Faculty = () => {
                     placeholder="eg.ABO"
                     name="facultyInitial"
                     value={FacultyValue.facultyInitial}
-                    onChange={HandleDoctorChange}
+                    onChange={HandleFacultyChange}
                     required
                   />
                 </div>
@@ -219,7 +193,7 @@ const Add_Faculty = () => {
                   <select
                     name="facultyDepartment"
                     value={FacultyValue.facultyDepartment}
-                    onChange={HandleDoctorChange}
+                    onChange={HandleFacultyChange}
                     required
                   >
                     <option value="General">Select</option>
@@ -242,7 +216,7 @@ const Add_Faculty = () => {
                     placeholder="ID"
                     name="facultyID"
                     value={FacultyValue.facultyID}
-                    onChange={HandleDoctorChange}
+                    onChange={HandleFacultyChange}
                     required
                   />
                 </div>
@@ -255,7 +229,7 @@ const Add_Faculty = () => {
                     placeholder="Password"
                     name="facultyPassword"
                     value={FacultyValue.facultyPassword}
-                    onChange={HandleDoctorChange}
+                    onChange={HandleFacultyChange}
                     required
                   />
                 </div>
@@ -270,7 +244,7 @@ const Add_Faculty = () => {
                     cols="50"
                     name="details"
                     value={FacultyValue.details}
-                    onChange={HandleDoctorChange}
+                    onChange={HandleFacultyChange}
                     required
                   />
                 </div>

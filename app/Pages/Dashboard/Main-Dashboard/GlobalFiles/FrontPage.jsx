@@ -33,7 +33,7 @@ const FrontPage = () => {
 
   return (
     <div className="container">
-      <Sidebar />
+      <Sidebar userType="admin"/>
       <div className="AfterSideBar">
         <h1 style={{ color: "rgb(184 191 234)" }}>Overview</h1>
         <div className="maindiv">

@@ -20,7 +20,7 @@ import { MdDashboardCustomize } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import "./CommonCSS.css";
 
-const Sidebar = () => {
+const Sidebar = ({userType}) => {
   const [isOpen, setIsOpen] = useState(true);
   const dispatch = useDispatch();
 
@@ -48,7 +48,7 @@ const Sidebar = () => {
             </div>
           </div>
           <div className="bottomSection">
-          {user?.userType === "admin" ? (
+          {userType === "admin" ? (
             <Link className="link" activeclassname="active" to={"/dashboard"}>
               <div className="icon">
                 <MdDashboardCustomize className="mainIcon" />
@@ -61,7 +61,7 @@ const Sidebar = () => {
               </div>
             </Link>) : null}
 
-            {user?.userType === "admin" ? (
+            {userType === "admin" ? (
               <Link className="link" activeclassname="active" to={"/adddoctor"}>
                 <div className="icon">
                   <AiOutlineUserAdd className="mainIcon" />
@@ -75,7 +75,7 @@ const Sidebar = () => {
               </Link>
             ) : null}
             
-            {user?.userType === "admin" ? (
+            {userType === "admin" ? (
               <Link className="link" activeclassname="active" to={"/admin"}>
                 <div className="icon">
                   <RiAdminLine
@@ -94,7 +94,7 @@ const Sidebar = () => {
 
         
 
-            {user?.userType === "admin" ? (
+            {userType === "admin" ? (
               <Link className="link" activeclassname="active" to={"/rooms"}>
               <div className="icon">
                 <MdBedroomChild className="mainIcon" />
@@ -107,44 +107,8 @@ const Sidebar = () => {
               </div>
             </Link>
             ) : null} 
-
-            {user?.userType === "doctor" ? (
-              <Link
-                className="link"
-                activeclassname="active"
-                to={"/doctorprofile"}
-              >
-                <div className="icon">
-                  <SlUserFollow className="mainIcon" />
-                </div>
-                <div
-                  style={{ display: isOpen ? "block" : "none" }}
-                  className="link_text"
-                >
-                  Profile
-                </div>
-              </Link>
-            ) : null}
             
-           
-            {user?.userType === "doctor" ? (
-              <Link
-                className="link"
-                activeclassname="active"
-                to={"/checkappointment"}
-              >
-                <div className="icon">
-                  <BsFillBookmarkCheckFill className="mainIcon" />
-                </div>
-                <div
-                  style={{ display: isOpen ? "block" : "none" }}
-                  className="link_text"
-                >
-                  Offer Course
-                </div>
-              </Link>
-            ) : null}
-            {user?.userType === "doctor" ? (
+      {userType === "admin" ? (
               <Link
                 className="link"
                 activeclassname="active"
@@ -161,6 +125,60 @@ const Sidebar = () => {
                 </div>
               </Link>
             ) : null}
+            {userType === "faculty" ? (
+              <Link
+                className="link"
+                activeclassname="active"
+                to={"/doctorprofile"}
+              >
+                <div className="icon">
+                  <SlUserFollow className="mainIcon" />
+                </div>
+                <div
+                  style={{ display: isOpen ? "block" : "none" }}
+                  className="link_text"
+                >
+                  Profile
+                </div>
+              </Link>
+            ) : null}
+               {userType === "faculty" ? (
+              <Link
+                className="link"
+                activeclassname="active"
+                to={"/offeredcourses"}
+              >
+                <div className="icon">
+                  <BiDetail className="mainIcon" />
+                </div>
+                <div
+                  style={{ display: isOpen ? "block" : "none" }}
+                  className="link_text"
+                >
+                  Offered Courses
+                </div>
+              </Link>
+            ) : null}
+           
+            {userType === "faculty" ? (
+              <Link
+                className="link"
+                activeclassname="active"
+                to={"/checkappointment"}
+              >
+                <div className="icon">
+                  <BsFillBookmarkCheckFill className="mainIcon" />
+                </div>
+                <div
+                  style={{ display: isOpen ? "block" : "none" }}
+                  className="link_text"
+                >
+                  Offer Course
+                </div>
+              </Link>
+            ) : null}
+              
+      
             {/* {user?.userType === "doctor" ? (
               <Link
                 className="link"

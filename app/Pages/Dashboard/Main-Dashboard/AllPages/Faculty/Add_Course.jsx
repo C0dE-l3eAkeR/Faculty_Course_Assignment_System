@@ -7,13 +7,20 @@ import Sidebar from "../../GlobalFiles/Sidebar";
 import "react-toastify/dist/ReactToastify.css";
 import { toast, ToastContainer } from "react-toastify";
 import "./CSS/Faculty_Profile.css"
+import { University, Admin } from "../backend";
+
+
+
+
 const notify = (text) => toast(text);
 
-const Add_Course = () => {
-  const { data } = useSelector((store) => store.auth);
+const admn = new Admin("101","Asif","dsf","sdf","sdfsdf");
+
+const Add_Course = ({admin}) => {
+
 
   const [loading, setLoading] = useState(false);
-  const [AddedCourses, setAddedC] =useState([]);
+  const [AddedCourses, setAddedC] =useState(University.courses);
 
   const dispatch = useDispatch();
 
@@ -35,39 +42,29 @@ const Add_Course = () => {
  
 
   const HandleReportSubmit = (e) => {
-    e.preventDefault();
+    //e.preventDefault();
     let data = {
       ...ReportValue,
     };
     try {
       setLoading(true);
-      dispatch(CreateReport(data)).then((res) => {
-        if (res.message === "Report successfully created") {
-          notify("Report Created Sucessfully");
+  
+     admn.createCourse(data.courseName, data.courseCredit);
+     setAddedC(University.courses);
+     notify("Report Created Sucessfully");
           setLoading(false);
           setReportValue(InitData);
-        } else {
-          setLoading(false);
-          notify("Something went Wrong");
-        }
-      });
     } catch (error) {
       console.log(error);
     }
   };
 
-  if (data?.isAuthticated === false) {
-    return <Navigate to={"/"} />;
-  }
-
-  if (data?.user.userType !== "doctor") {
-    return <Navigate to={"/dashboard"} />;
-  }
+  
   return (
     <>
       <ToastContainer />
       <div className="container">
-        <Sidebar />
+      <Sidebar userType="admin"/>
         <div className="AfterSideBar">
           <div className="Main_Add_Doctor_div">
             <h1>Add Course</h1>
@@ -144,7 +141,7 @@ const Add_Course = () => {
              
             </form>
             <div className="rightside2">
-            <button type="submit">{loading ? "Loading..." : "ADD"}</button>
+            <button type="submit" onClick={HandleReportSubmit}>{loading ? "Loading..." : "ADD"}</button>
             </div>
             <div className="Payment_Page">
             <h1 style={{ marginBottom: "2rem" }}>Added Courses</h1>
@@ -161,8 +158,8 @@ const Add_Course = () => {
                   {AddedCourses?.map((ele) => {
                     return (
                       <tr onClick={""}>
-                        <td>{ele.courseName}</td>
-                        <td>{ele.courseInitial}</td>
+                        <td>{ele.name}</td>
+                        <td>{ele.credit}</td>
                         <td>
                           <button
                             style={{
