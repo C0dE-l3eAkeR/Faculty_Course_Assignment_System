@@ -85,9 +85,9 @@ function toggle() {
   else
   setSelectedRow(null);
 };
-const startTime = ["08.00am","09.10am"];
-const endTime = ["09.00am","10.10am"];
-const days = ["Sat", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri"];
+const startTime = ["08.00am","09.10am","10.20am","11.30am","12.40pm","01.50pm","03.00pm","04.10pm","05.20pm"];
+const endTime = ["09.00am","10.10am","11.20am","12.30pm","01.40pm","02.50pm","04.00pm","05.10pm","06.20pm"];
+const days = ["Sat", "Sun", "Mon", "Tue", "Wed", "Thu"];
 
   const DeleteCrs = (crs) => {
   

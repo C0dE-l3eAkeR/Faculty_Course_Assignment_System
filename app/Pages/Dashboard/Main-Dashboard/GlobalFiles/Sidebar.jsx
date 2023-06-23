@@ -196,9 +196,7 @@ const Sidebar = ({userType}) => {
 
             <Link
               className="LogOutPath link"
-              onClick={() => {
-                dispatch({ type: "AUTH_LOGOUT" });
-              }}
+              onClick={""}
               to={"/"}
             >
               <div className="icon">

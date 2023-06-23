@@ -23,7 +23,38 @@ class Course {
         this.credit = credit;
     }
 }
-
+class slotClass {
+    constructor(){
+        this.days = ["Sat", "Sun", "Mon", "Tue", "Wed", "Thu"]
+        this.times1 = ["08.00am","09.10am","10.20am","11.30am","12.40pm","01.50pm","03.00pm","04.10pm","05.20pm"];
+        this.times2 = ["09.00am","10.10am","11.20am","12.30pm","01.40pm","02.50pm","04.00pm","05.10pm","06.20pm"];
+        this.slot = [[0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0]];
+    }
+     manageSlot(time){
+       let i=this.times1.indexOf(time.startTime);
+       let j=this.times2.indexOf(time.endTime);
+       let k= this.days.indexOf(time.day1);
+       let l = this.days.indexOf(time.day2);
+       for(let ii=i;ii<=j;ii++){
+        this.slot[k][ii]=1;
+        this.slot[l][ii]=1;
+       }
+     }
+     compareSlot(time){
+        let i= this.times1.indexOf(time.startTime);
+       let j= this.times2.indexOf(time.endTime);
+       let k= this.days.indexOf(time.day1);
+       let l = this.days.indexOf(time.day2);
+       let flag=true;
+       for(let ii=i;ii<=j;ii++){
+        if(this.slot[k][ii]!==0)flag=false;}
+        for(let ii=i;ii<=j;ii++){
+        if(this.slot[l][ii]!==0)flag=false;
+       }
+       console.log(flag);
+      return flag;
+     }
+}
 class Admin extends User {
     constructor(id, name, address, gender, email, password) {
         super(id, name, address, gender, email);
@@ -65,6 +96,7 @@ class Faculty extends User {
         this.offerdCourses = [];
         this.password = password;
         this.creditcount =0;
+        this.slot = new slotClass();
     }
   
 
@@ -77,7 +109,10 @@ class Faculty extends User {
 class Room {
     constructor(number, available){
         this.number=number;
-        this.available = available;
+        this.slot = new slotClass();
+    }
+    setAvailability(){
+
     }
 }
 
@@ -109,9 +144,9 @@ class University {
     static crsIndx = 0;
     
 
-   static allocateRoom(){
-    let room;
-    this.rooms.map((e)=>e.available==true?room=e:null);
+   static allocateRoom(timing){
+    let room = "";
+    this.rooms.map((e)=>{if(e.slot.compareSlot(timing)==true){room=e; e.slot.manageSlot(timing);}});
     return room;
    }
 
@@ -121,8 +156,16 @@ class University {
 
     static addsec(crs,timing){
         this.secNo[crs.index]+=1;
-        const sec1 = new Section(crs,this.secNo[crs.index], timing, this.allocateRoom()) 
+        const room = this.allocateRoom(timing);
+        if(room!==""){
+        const sec1 = new Section(crs,this.secNo[crs.index], timing,room );
+        console.log(sec1);
         return sec1;
+        }
+        else {
+            console.log("error - room not available");
+            return false;
+        }
     }
 
     static addAll(){
@@ -151,12 +194,14 @@ class University {
     static offerCrs(fac, crs, timing){
     console.log(parseInt(fac.creditcount) + parseInt(crs.credit));
    // if(fac.creditcount + parseInt(crs.credit) <=11){
-    fac.offerCourse(this.addsec(crs, timing));
-    fac.creditcount += crs.credit;
-   // }
-  //  else {
+    const section = this.addsec(crs, timing);
+    if(!section){
         console.log("Error");
-   // }
+    }
+    else {  
+        fac.offerCourse(section);
+    fac.creditcount += crs.credit;
+    }
   }
 }
 

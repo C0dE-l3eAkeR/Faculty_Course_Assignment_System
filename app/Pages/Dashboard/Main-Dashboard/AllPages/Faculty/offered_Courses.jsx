@@ -13,7 +13,8 @@ import { University } from "../backend";
 import { faculty } from "../../../Dashboard-Login/DLogin";
 
 const Offered_Courses = () => {
-  
+  const course = faculty.offerdCourses;
+ console.log(course);
   //const id = data.user.ID;
  
   const navigate = useNavigate();
@@ -26,7 +27,7 @@ const Offered_Courses = () => {
 
  const [AllCourses, setApp] = useState([]); 
  const [opened, setop] = useState(true);
- const course = faculty.offerdCourses;
+ 
  const courseI = "CSE101";
  const courseN ="Intro to pc";
 
