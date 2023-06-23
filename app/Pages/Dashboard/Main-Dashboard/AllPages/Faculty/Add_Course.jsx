@@ -8,13 +8,13 @@ import "react-toastify/dist/ReactToastify.css";
 import { toast, ToastContainer } from "react-toastify";
 import "./CSS/Faculty_Profile.css"
 import { University, Admin } from "../backend";
-
+import { admin } from "../../../Dashboard-Login/DLogin";
 
 
 
 const notify = (text) => toast(text);
 
-export const admin = new Admin("101","Asif","dsf","sdf","sdfsdf");
+
 
 const Add_Course = () => {
 

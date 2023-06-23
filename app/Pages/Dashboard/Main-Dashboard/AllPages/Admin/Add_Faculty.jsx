@@ -8,7 +8,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Navigate } from "react-router-dom";
 import Image from "next/image";
-import { admin } from "../Faculty/Add_Course";
+import { admin } from "../../../Dashboard-Login/DLogin";
 import { University } from "../backend";
 const notify = (text) => toast(text);
 

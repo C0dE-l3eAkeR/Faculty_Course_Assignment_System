@@ -25,9 +25,9 @@ class Course {
 }
 
 class Admin extends User {
-    constructor(id, name, address, gender, email) {
+    constructor(id, name, address, gender, email, password) {
         super(id, name, address, gender, email);
-        
+        this.password = password;
     }
 
     addFaculty(faculty) {
@@ -40,8 +40,8 @@ class Admin extends User {
         console.log(`Faculty ${faculty.name} has been deleted by ${this.name}`);
     }
 
-    assignCourseToFaculty(course, faculty) {
-       University.offerCrs(faculty, course); 
+    assignCourseToFaculty(course, faculty, timing) {
+       University.offerCrs(faculty, course, timing); 
     }
 
   
@@ -126,6 +126,7 @@ class University {
 
     static addAll(){
     this.faculties.push(new Faculty("001","abcshoaib","adsfd","234234","asdfdas","CSE","masai"));
+    this.admins.push(new Admin("101","shoaib","adsfd","asdfdas","gmail","masai"));
     this.courses.push(new Course(0,"CSE102","3"));
     this.secNo[0]=0;
     this.rooms.push(new Room(101,true))

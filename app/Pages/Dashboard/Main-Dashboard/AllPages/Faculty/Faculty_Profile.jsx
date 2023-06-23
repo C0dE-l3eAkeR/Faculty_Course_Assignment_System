@@ -20,7 +20,7 @@ import Docpic from "../../../../../img/doctoravatar.png";
 import { University } from "../backend";
 
 
-University.addAll();
+
 
 export const fac1 = University.faculties[0];
 console.log(fac1.name);

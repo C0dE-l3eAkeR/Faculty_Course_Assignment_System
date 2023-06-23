@@ -4,19 +4,23 @@ import { useState } from "react";
 import Image from 'next/image'
 import { Radio } from "antd";
 import banner from "./banner.png";
-import admin from "../../../img/admin.jpg";
+import admin2 from "../../../img/admin.jpg";
 import "./DLogin.css";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-
+import { University } from "../Main-Dashboard/AllPages/backend";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Drawer } from "antd";
 const notify = (text) => toast(text);
-
+University.addAll();
+const faculties = University.faculties;
+const admins = University.admins;
+export let faculty ="";
+export let admin = "";
 const DLogin = () => {
   const [open, setOpen] = useState(false);
-
+   
   const showDrawer = () => {
     setOpen(true);
   };
@@ -67,8 +71,10 @@ const DLogin = () => {
             notify("Something went Wrong, Please Try Again");
           }
         });*/
-        if(formvalue.ID=="100" && formvalue.password=="masai"){
+        const user =  faculties.find((e)=>e.id==formvalue.ID);
+        if(user && user.password==formvalue.password){
         notify("Login Successful");
+        faculty=user;
         return navigate("/facultyprofile"); 
       } else  {
         setLoading(false);
@@ -99,8 +105,10 @@ const DLogin = () => {
             notify("Something went Wrong, Please Try Again");
           }
         });*/
-        if(formvalue.ID=="100" && formvalue.password=="masai"){
+        const user =  admins.find((e)=>e.id==formvalue.ID);
+        if(user && user.password==formvalue.password){
           notify("Login Successful");
+          admin=user;
           return navigate("/dashboard"); 
         } else  {
           setLoading(false);
@@ -159,7 +167,7 @@ const DLogin = () => {
             </Radio.Group>
           </div>
           <div className="Profileimg">
-            <Image src={admin}   height="35px" alt="profile" />
+            <Image src={admin2}   height="35px" alt="profile" />
           </div>
           <div>
             <p>ID - 100</p>

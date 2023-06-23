@@ -7,14 +7,14 @@ import { Button, message, Modal } from "antd";
 import { AiFillCalendar, AiFillEdit } from "react-icons/ai";
 import Sidebar from "../../GlobalFiles/Sidebar";
 import { University } from "../backend";
-
+import { admin } from "../../../Dashboard-Login/DLogin";
 
 const Assign_Course = () => {
 
   const faculties = University.faculties;
 
   const userType = "admin";
-
+  const [selected, setselected] =useState("");
   const startTime = ["08.00am","09.10am"];
   const endTime = ["09.00am","10.10am"];
   const days = ["Sat", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri"];
@@ -28,6 +28,7 @@ const Assign_Course = () => {
   };
   
   const [formData, setFormData] = useState({
+   course : "",
    startTime : "",
    endTime: "",
    day1: "",
@@ -40,7 +41,7 @@ const Assign_Course = () => {
   const [confirmLoading, setConfirmLoading] = useState(false);
   const handleFormSubmit = () => {
     const time = new Timing(formData.startTime, formData.endTime, formData.day1, formData.day2);
-    University.offerCrs(fac1,University.courses[0],time);
+    admin.assignCourseToFaculty(formData.course,selected, time);
     console.log(fac1.offerdCourses);
     handleOk();
   };
@@ -52,7 +53,7 @@ const Assign_Course = () => {
     }, 2000);
   };
   
-
+ const courses = University.courses;
 
   const AssignFaculty = (ID) => {
    
@@ -79,12 +80,21 @@ const Assign_Course = () => {
                     Cancel
                   </Button>,
                   <Button key="submit" onClick={handleFormSubmit}>
-                   Offer
+                   Assign
                   </Button>,
                 ]}
               >
                 <form className="inputForm">
-              
+                <select name="course" onChange={handleFormChange}>
+                    <option value="">Select Course</option>
+                    {courses.map((ele) => {
+                      return (
+                        <option key="" value={ele}>
+                          {ele.name}
+                        </option>
+                      );
+                    })}
+                  </select>
                   <select name="startTime" onChange={handleFormChange}>
                     <option value="">Select Start Time</option>
                     {startTime.map((ele) => {
@@ -141,7 +151,7 @@ const Assign_Course = () => {
                 <tbody>
                   {faculties.map((ele) => {
                     return (
-                      <tr>
+                      <tr onClick={(ele)=>setselected(ele)}>
                         <td>{ele.name}<br/><div className="singleitemdiv">
                 <button  onClick={showModal}>
                   {" "}
