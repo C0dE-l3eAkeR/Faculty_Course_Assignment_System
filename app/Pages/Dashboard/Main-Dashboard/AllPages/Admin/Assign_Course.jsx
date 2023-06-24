@@ -151,7 +151,7 @@ const Assign_Course = () => {
                 <tbody>
                   {faculties.map((ele) => {
                     return (
-                      <tr onClick={(ele)=>setselected(ele)}>
+                      <tr key={ele.id} onClick={(ele)=>setselected(ele)}>
                         <td>{ele.name}<br/><div className="singleitemdiv">
                 <button  onClick={showModal}>
                   {" "}

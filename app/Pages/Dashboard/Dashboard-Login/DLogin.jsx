@@ -13,7 +13,8 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Drawer } from "antd";
 const notify = (text) => toast(text);
-University.addAll();
+University.loadData();
+
 const faculties = University.faculties;
 const admins = University.admins;
 export let faculty ="";

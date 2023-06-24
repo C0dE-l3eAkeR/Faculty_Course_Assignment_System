@@ -51,6 +51,7 @@ const Add_Course = () => {
   
      admin.createCourse(data.courseName, data.courseCredit);
      setAddedC(University.courses);
+     University.saveData();
      notify("Course Created Sucessfully");
           setLoading(false);
           setReportValue(InitData);
@@ -157,7 +158,7 @@ const Add_Course = () => {
                 <tbody>
                   {AddedCourses?.map((ele) => {
                     return (
-                      <tr onClick={""}>
+                      <tr key={ele.name} onClick={""}>
                         <td>{ele.name}</td>
                         <td>{ele.credit}</td>
                         <td>

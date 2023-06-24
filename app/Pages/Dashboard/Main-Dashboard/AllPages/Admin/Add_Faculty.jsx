@@ -39,6 +39,7 @@ const Add_Faculty = () => {
     e.preventDefault();
     setLoading(true);
     admin.addFaculty(FacultyValue); 
+    University.saveData();
     console.log(University.faculties);
     setFacultyValue(initData);
     notify("New faculty added")

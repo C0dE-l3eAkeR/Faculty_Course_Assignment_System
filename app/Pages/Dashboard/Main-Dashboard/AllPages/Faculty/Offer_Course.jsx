@@ -59,9 +59,12 @@ const [selectedRow, setSelectedRow] = useState(null);
 const [confirmLoading, setConfirmLoading] = useState(false);
 const handleFormSubmit = () => {
   const time = new Timing(formData.startTime, formData.endTime, formData.day1, formData.day2);
+  console.log(selectedRow);
   University.offerCrs(faculty,selectedRow,time);
+  University.saveData();
   console.log(faculty.offerdCourses);
   handleOk();
+
 };
 const handleOk = () => {
   setConfirmLoading(true);
@@ -80,10 +83,7 @@ function toggle() {
 
  const handleRowClick = (row) => {
   toggle();
-  if(opened)
   setSelectedRow(row);
-  else
-  setSelectedRow(null);
 };
 const startTime = ["08.00am","09.10am","10.20am","11.30am","12.40pm","01.50pm","03.00pm","04.10pm","05.20pm"];
 const endTime = ["09.00am","10.10am","11.20am","12.30pm","01.40pm","02.50pm","04.00pm","05.10pm","06.20pm"];
@@ -95,7 +95,7 @@ const days = ["Sat", "Sun", "Mon", "Tue", "Wed", "Thu"];
     if (index > -1) { // only splice array when item is found
       University.courses.splice(index, 1); // 2nd parameter means remove one item only
     }
-  
+  University.saveData();
   };
  
 /*

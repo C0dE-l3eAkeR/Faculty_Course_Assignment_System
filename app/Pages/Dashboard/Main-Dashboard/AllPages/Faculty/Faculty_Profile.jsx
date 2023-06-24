@@ -26,7 +26,7 @@ import { faculty } from "../../../Dashboard-Login/DLogin";
 // *********************************************************
 function Faculty_Profile() {
   const userType = "faculty";
-
+  console.log(faculty);
 
 
 

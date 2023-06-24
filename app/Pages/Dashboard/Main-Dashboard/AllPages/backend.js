@@ -1,3 +1,4 @@
+import axios from "axios";
 class User {
     constructor(id, name, address, gender, email) {
         if (this.constructor === User) {
@@ -24,11 +25,13 @@ class Course {
     }
 }
 class slotClass {
-    constructor(){
-        this.days = ["Sat", "Sun", "Mon", "Tue", "Wed", "Thu"]
-        this.times1 = ["08.00am","09.10am","10.20am","11.30am","12.40pm","01.50pm","03.00pm","04.10pm","05.20pm"];
-        this.times2 = ["09.00am","10.10am","11.20am","12.30pm","01.40pm","02.50pm","04.00pm","05.10pm","06.20pm"];
-        this.slot = [[0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0]];
+
+        days = ["Sat", "Sun", "Mon", "Tue", "Wed", "Thu"]
+        times1 = ["08.00am","09.10am","10.20am","11.30am","12.40pm","01.50pm","03.00pm","04.10pm","05.20pm"];
+         times2 = ["09.00am","10.10am","11.20am","12.30pm","01.40pm","02.50pm","04.00pm","05.10pm","06.20pm"];
+        static defalutSlot = [[0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0]];
+    constructor(slot){ 
+        this.slot = slot;
     }
      manageSlot(time){
        let i=this.times1.indexOf(time.startTime);
@@ -77,11 +80,7 @@ class Admin extends User {
 
   
     createCourse(courseName, courseCredit) {
-
-        University.crsIndx +=1;
-        const course = new Course(University.crsIndx, courseName, courseCredit);
-        University.secNo[University.crsIndx]=0;
-        University.courses.push(course);   
+        University.createCrs(courseName, courseCredit);
     }
 }
 
@@ -89,14 +88,14 @@ class Admin extends User {
 
 class Faculty extends User {
   
-    constructor(id, name, address, gender, email, department, password) {
+    constructor(id, name, address, gender, email, department, password, assignedCourses, offerdCourses, creditcount, slot) {
         super(id, name, address, gender, email);
         this.department = department;
-        this.assignedCourses = [];
-        this.offerdCourses = [];
+        this.assignedCourses = assignedCourses;
+        this.offerdCourses = offerdCourses;
         this.password = password;
-        this.creditcount =0;
-        this.slot = new slotClass();
+        this.creditcount= creditcount;
+        this.slot = slot;
     }
   
 
@@ -107,9 +106,9 @@ class Faculty extends User {
 }
 
 class Room {
-    constructor(number, available){
+    constructor(number,slot){
         this.number=number;
-        this.slot = new slotClass();
+        this.slot = slot;
     }
     setAvailability(){
 
@@ -142,7 +141,7 @@ class University {
     static rooms = [];
     static secNo = [];
     static crsIndx = 0;
-    
+   
 
    static allocateRoom(timing){
     let room = "";
@@ -169,22 +168,32 @@ class University {
     }
 
     static addAll(){
-    this.faculties.push(new Faculty("100","abcshoaib","adsfd","234234","asdfdas","CSE","masai"));
+    this.faculties.push(new Faculty("100","abcshoaib","adsfd","234234","asdfdas","CSE","masai",new slotClass(slotClass.defalutSlot)));
     this.admins.push(new Admin("100","shoaib","adsfd","asdfdas","gmail","masai"));
     this.courses.push(new Course(0,"CSE102",'3'));
     this.secNo[0]=0;
-    this.rooms.push(new Room(101,true))
+    this.rooms.push(new Room(101,new slotClass(slotClass.defalutSlot)));
     }
 
     static addFac(faculty){
     
      this.faculties.push(new Faculty(faculty.id, faculty.name, faculty.address, faculty.gender,
-        faculty.email, faculty.department, faculty.password));
+        faculty.email, faculty.department, faculty.password,[],[],0,new slotClass(slotClass.defalutSlot)));
     }
 
-    static createCrs(course){
+    static checkFacultSlot(fac,time){
+        if(fac.slot.compareSlot(time)==true){
+            fac.slot.manageSlot(time);
+            return true;
+        }else return false;
+    }
 
-        this.courses.unshift(course);
+    static createCrs(courseName, courseCredit){
+
+        University.crsIndx +=1;
+        const course = new Course(University.crsIndx, courseName, courseCredit);
+        University.courses.push(course);  
+        University.secNo[University.crsIndx]=0; 
     }
     
     static removeFaculty(){
@@ -192,17 +201,66 @@ class University {
     }
 
     static offerCrs(fac, crs, timing){
-    console.log(parseInt(fac.creditcount) + parseInt(crs.credit));
-   // if(fac.creditcount + parseInt(crs.credit) <=11){
+
+ 
     const section = this.addsec(crs, timing);
-    if(!section){
+    const checkFacSlot = this.checkFacultSlot(fac,timing);
+
+    if(!section || fac.creditcount + parseInt(crs.credit) >11 || !checkFacSlot ){
         console.log("Error");
     }
     else {  
         fac.offerCourse(section);
-    fac.creditcount += crs.credit;
+    fac.creditcount += parseInt(crs.credit);
     }
   }
+  static saveData() {
+    const data = {
+      admins: this.admins,
+      faculties: this.faculties,
+      courses: this.courses,
+      secNo : this.secNo,
+      rooms : this.rooms,
+      crsIndx : this.crsIndx
+    };
+  
+    axios.post('http://localhost:4000/savedata', data).then((res)=>{
+      
+      console.log("data saved");
+      })
+  }
+
+  // Load data from file
+  static loadData() {
+   
+        axios.get('http://localhost:4000/loaddata').then((res)=>{
+       
+       const user = res.data;
+       user.admins.map((e)=>{
+         this.admins.push(new Admin(e.id,e.name,e.address,e.gender,e.email,e.password));
+       });
+       user.faculties.map((e)=>{
+        let offerCrs=[];
+        e.offerdCourses.map((f)=>offerCrs.push(f));
+        let assigndCrs=[];
+        e.assignedCourses.map((f)=>assigndCrs.push(f));
+        this.faculties.push(new Faculty(e.id,e.name,e.address,e.gender,e.email,e.department,e.password,assigndCrs,offerCrs,e.creditcount,new slotClass(e.slot.slot)));
+      });
+      user.courses.map((e)=>{
+        this.courses.push(new Course(e.index,e.name,e.credit));
+      });
+      user.rooms.map((e)=>{
+        this.rooms.push(new Room(e.number,new slotClass(e.slot.slot)));
+      });
+      user.secNo.map((e)=>{
+        this.secNo.push(e);
+      });
+      this.crsIndx = user.crsIndx;
+    })
+    console.log(this.admins);
+  }
+  
+
 }
 
 export {University, Admin, Timing};

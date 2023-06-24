@@ -38,6 +38,11 @@
     "redux-thunk": "^2.4.2",
     "web-vitals": "^2.1.4"
   },
+  "browser": {
+    "fs": false,
+    "os": false,
+    "path": false
+  },
   "description": "This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).",
   "main": "index.js",
   "author": "",

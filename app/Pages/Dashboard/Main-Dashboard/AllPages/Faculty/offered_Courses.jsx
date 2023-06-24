@@ -54,28 +54,25 @@ function toggle() {
                   <tr>
                     <th>Course</th>
                     <th>Section</th>
+                    <th>Start Time</th>
+                    <th>End Time</th>
+                    <th>Day1</th>
+                    <th>Day2</th>
+                    <th>Room</th>
                   </tr>
                 </thead>
                 <tbody>
                   {course?.map((ele) => {
                     return (
-                      <tr style={{}} onClick={()=> toggle()}>
+                      <tr key={ele.name} style={{}} onClick={()=> toggle()}>
                         
                         <td  className=""><h1 >{ele.course.name}</h1></td>
                         <td><h1>{ele.number}</h1></td>
-                        <td><div style={{width : "10%",float: "left"}}><button
-                            style={{
-                              border: "none",
-                              color: "red",
-                              outline: "none",
-                              background: "transparent",
-                              cursor: "pointer",
-                            }}
-                            onClick={() => DeleteCrs(ele.ID)}
-                          >
-                           Delete
-                          </button></div></td>
-                        
+                        <td><h1>{ele.time.startTime}</h1></td>
+                        <td><h1>{ele.time.endTime}</h1></td>
+                        <td><h1>{ele.time.day1}</h1></td>
+                        <td><h1>{ele.time.day2}</h1></td>
+                        <td><h1>{ele.room.number}</h1></td>
                        {/*} <td>
                           <button
                             style={{
