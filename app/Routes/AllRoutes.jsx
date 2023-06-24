@@ -14,7 +14,7 @@ import { Admin } from "../Pages/Dashboard/Main-Dashboard/AllPages/backend";
 import FrontPage from "../Pages/Dashboard/Main-Dashboard/GlobalFiles/FrontPage";
 import Add_Admin from "../Pages/Dashboard/Main-Dashboard/AllPages/Admin/Add_Admin";
 //import Add_Course2 from "../Pages/Dashboard/Main-Dashboard/AllPages/Admin/Add_Course2";
-
+import Room_Routine from "../Pages/Dashboard/Main-Dashboard/AllPages/Faculty/Room_Routine";
 
 
 
@@ -31,6 +31,7 @@ const AllRoutes = () => {
         <Route path="/addcourse" element={<Add_Course />} />
         <Route path="/facultyprofile" element={<Faculty_Profile />} />
         <Route path="/addadmin" element={<Add_Admin />} />
+        <Route path="/roomroutine" element={<Room_Routine />} />
         
 
       </Routes>

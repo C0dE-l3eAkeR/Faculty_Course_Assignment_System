@@ -8,16 +8,16 @@ import { AiFillCalendar, AiFillEdit } from "react-icons/ai";
 import Sidebar from "../../GlobalFiles/Sidebar";
 import { University } from "../backend";
 import { admin } from "../../../Dashboard-Login/DLogin";
-
+import { Timing } from "../backend";
 const Assign_Course = () => {
 
   const faculties = University.faculties;
 
   const userType = "admin";
-  const [selected, setselected] =useState("");
-  const startTime = ["08.00am","09.10am"];
-  const endTime = ["09.00am","10.10am"];
-  const days = ["Sat", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri"];
+  const [selected, setselected] =useState(null);
+  const days = ["Sat", "Sun", "Mon", "Tue", "Wed", "Thu"]
+  const startTime = ["08.00am","09.10am","10.20am","11.30am","12.40pm","01.50pm","03.00pm","04.10pm","05.20pm"];
+  const endTime = ["09.00am","10.10am","11.20am","12.30pm","01.40pm","02.50pm","04.00pm","05.10pm","06.20pm"];
   const [open, setOpen] = useState(false);
 
   const showModal = () => {
@@ -42,7 +42,8 @@ const Assign_Course = () => {
   const handleFormSubmit = () => {
     const time = new Timing(formData.startTime, formData.endTime, formData.day1, formData.day2);
     admin.assignCourseToFaculty(formData.course,selected, time);
-    console.log(fac1.offerdCourses);
+    University.saveData();
+    
     handleOk();
   };
   const handleOk = () => {
@@ -59,7 +60,9 @@ const Assign_Course = () => {
    
   };
 
-
+  const handleRowClick = (row) => {
+    setselected(row);
+  };
 
 
   return (
@@ -148,15 +151,15 @@ const Assign_Course = () => {
                     <th>Action</th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody>/
                   {faculties.map((ele) => {
                     return (
-                      <tr key={ele.id} onClick={(ele)=>setselected(ele)}>
+                      <tr key={ele.id} onClick={() => handleRowClick(ele)}>
                         <td>{ele.name}<br/><div className="singleitemdiv">
                 <button  onClick={showModal}>
                   {" "}
                   <AiFillEdit />
-                 <div style={{ }}> Offer Course</div>
+                 <div style={{ }}> Assign Course</div>
                 </button>
               </div>
               </td>

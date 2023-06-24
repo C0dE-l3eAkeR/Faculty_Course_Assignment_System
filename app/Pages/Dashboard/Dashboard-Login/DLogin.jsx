@@ -14,7 +14,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { Drawer } from "antd";
 const notify = (text) => toast(text);
 University.loadData();
-
+University.printRoomWiseRoutine();
 const faculties = University.faculties;
 const admins = University.admins;
 export let faculty ="";

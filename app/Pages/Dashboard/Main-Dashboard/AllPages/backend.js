@@ -1,4 +1,6 @@
 import axios from "axios";
+import { toast, ToastContainer } from "react-toastify";
+const notify = (text) => toast(text);
 class User {
     constructor(id, name, address, gender, email) {
         if (this.constructor === User) {
@@ -168,11 +170,11 @@ class University {
     }
 
     static addAll(){
-    this.faculties.push(new Faculty("100","abcshoaib","adsfd","234234","asdfdas","CSE","masai",new slotClass(slotClass.defalutSlot)));
-    this.admins.push(new Admin("100","shoaib","adsfd","asdfdas","gmail","masai"));
-    this.courses.push(new Course(0,"CSE102",'3'));
-    this.secNo[0]=0;
-    this.rooms.push(new Room(101,new slotClass(slotClass.defalutSlot)));
+      this.faculties.push(new Faculty("100","abcshoaib","adsfd","234234","asdfdas","CSE","masai",new slotClass(slotClass.defalutSlot)));
+      this.admins.push(new Admin("100","shoaib","adsfd","asdfdas","gmail","masai"));
+      this.courses.push(new Course(0,"CSE102",'3'));
+      this.secNo[0]=0;
+      this.rooms.push(new Room(101,new slotClass(slotClass.defalutSlot)));
     }
 
     static addFac(faculty){
@@ -201,19 +203,18 @@ class University {
     }
 
     static offerCrs(fac, crs, timing){
-
- 
-    const section = this.addsec(crs, timing);
-    const checkFacSlot = this.checkFacultSlot(fac,timing);
-
-    if(!section || fac.creditcount + parseInt(crs.credit) >11 || !checkFacSlot ){
-        console.log("Error");
-    }
-    else {  
-        fac.offerCourse(section);
-    fac.creditcount += parseInt(crs.credit);
+       const section = this.addsec(crs, timing);
+       const checkFacSlot = this.checkFacultSlot(fac,timing);
+           if(!section || fac.creditcount + parseInt(crs.credit) >11 || !checkFacSlot ){
+                notify("Error Activity");
+                console.log("Error");
+           }
+           else {  
+            fac.offerCourse(section);
+            fac.creditcount += parseInt(crs.credit);
     }
   }
+
   static saveData() {
     const data = {
       admins: this.admins,
@@ -259,7 +260,25 @@ class University {
     })
     console.log(this.admins);
   }
-  
+  static printRoomWiseRoutine() {
+    for (const room of this.rooms) {
+      console.log(`Room ${room.number} Schedule:`);
+      for (const section of room.slot.slot) {
+        const dayIndex = room.slot.slot.indexOf(section);
+        const day = room.slot.days[dayIndex];
+        const scheduledTimes = [];
+        for (let i = 0; i < section.length; i++) {
+          if (section[i] === 1) {
+            scheduledTimes.push(`${room.slot.times1[i]} - ${room.slot.times2[i]}`);
+          }
+        }
+        if (scheduledTimes.length > 0) {
+          console.log(`${day}: ${scheduledTimes.join(", ")}`);
+        }
+      }
+     // console.log(scheduledTimes);
+    }
+  } 
 
 }
 

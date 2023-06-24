@@ -1,5 +1,4 @@
 "use client";
-import { Link } from "react-router-dom"
 import { Table } from "antd";
 import { useEffect, useState } from "react";
 import React from "react";
@@ -13,8 +12,29 @@ import Sidebar from "../../GlobalFiles/Sidebar";
 import { University } from "../backend";
 import { faculty } from "../../../Dashboard-Login/DLogin";
 
-const Offered_Courses = () => {
+const Room_Routine = () => {
   const course = faculty.offerdCourses;
+  let routine=[];
+  let rr =[];
+  const days = ["Sat", "Sun", "Mon", "Tue", "Wed", "Thu"]
+  const times1 = ["08.00am","09.10am","10.20am","11.30am","12.40pm","01.50pm","03.00pm","04.10pm","05.20pm"];
+  const times2 = ["09.00am","10.10am","11.20am","12.30pm","01.40pm","02.50pm","04.00pm","05.10pm","06.20pm"];
+  const rooms = ["101","102"];
+  course.map((e)=>{
+    const rnum =rooms.indexOf(e.room.number);
+    const stim =times1.indexOf(e.startTime);
+    const etim =times1.indexOf(e.endTime);
+    const d1 = days.indexOf(e.day1);
+    const d2 = days.indexOf(e.day2);
+   
+ 
+    
+    routine.push({course:e.course.name,stim:e.startTime,etim:e.endTime});
+    routine.push({course:e.course.name,stim:e.startTime,etim:e.endTime});
+   console.log(routine['sat']);
+     })
+  
+    
  console.log(course);
   //const id = data.user.ID;
  
@@ -53,27 +73,26 @@ function toggle() {
               <table>
                 <thead>
                   <tr>
-                    <th>Course</th>
-                    <th>Section</th>
-                    <th>Start Time</th>
-                    <th>End Time</th>
-                    <th>Day1</th>
-                    <th>Day2</th>
-                    <th>Room</th>
+                    <th>Sat</th>
+                    <th>Sun</th>
+                    <th>Mon</th>
+                    <th>Tue</th>
+                    <th>Wed</th>
+                    <th>Thurs</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {course?.map((ele) => {
+                  {routine?.map((ele) => {
                     return (
                       <tr key={ele.name} style={{}} onClick={()=> toggle()}>
                         
                         <td  className=""><h1 >{ele.course.name}</h1></td>
-                        <td><h1>{ele.number}</h1></td>
+                        <td><h1>{ele.room.number}</h1></td>
                         <td><h1>{ele.time.startTime}</h1></td>
                         <td><h1>{ele.time.endTime}</h1></td>
                         <td><h1>{ele.time.day1}</h1></td>
                         <td><h1>{ele.time.day2}</h1></td>
-                        <td><h1>{ele.room.number}</h1></td>
+                        <td><h1>{}</h1></td>
                        {/*} <td>
                           <button
                             style={{
@@ -96,17 +115,9 @@ function toggle() {
             </div>
           </div>
         </div>
-        <Link
-                className="link"
-                activeclassname="active"
-                to={"/roomroutine"}
-              >
-        <button>
-          Room Routine
-        </button></Link>
       </div>
     </>
   );
 };
 
-export default Offered_Courses;
+export default Room_Routine;
